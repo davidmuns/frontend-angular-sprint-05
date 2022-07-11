@@ -1,0 +1,50 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: black;
+    background-size: cover;
+}
+
+.btn-emoji {
+    margin: 10px;
+    border: none;
+}
+.btn-emoji:hover{
+    background-color: yellow;
+}
+
+.container{
+    background-image: url('./img/blob.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 700px;
+    background-size: 120% 120%;
+}
+#text-joke{
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.btn-get-dadJoke {
+    background-color: rgb(230, 223, 223);
+    padding: 10px 20px;
+    border: 2px solid gray;
+    border-radius: 10%;
+
+}
+.btn-get-dadJoke:hover{
+    background-color: bisque;    
+
+}
+
+.header-container {
+    background-color: olive;
+    padding: 20px;
+}
+
+
