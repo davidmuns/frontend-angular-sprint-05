@@ -1,4 +1,4 @@
-const DAD_JOKE_URL: string = "https://icanhazdadjoke.com/";
+const URL_JOKE: string = "https://icanhazdadjoke.com/";
 const header = {
     headers: {
         Accept: "application/json",
@@ -16,35 +16,25 @@ class Joke {
         this.date = date;
     }
 }
-let tempJoke: string = '';
-async function getJoke(): Promise<void> {
 
+let savedJoke: string;
+async function requestJoke(): Promise<void> {
+    let htmlElement: HTMLElement = document.getElementById('joke-in-paragraph') as HTMLElement;
     try {
-        const response: Response = await fetch(DAD_JOKE_URL, header)
-
+        let response: Response = await fetch(URL_JOKE, header)
         if (!response.ok) throw new Error(`Error! status: ${response.status}`);
-
-        const joke: string = await response.json()
+        let joke: string = await response.json()
             .then(jokeJson => jokeJson.joke);
-
-        document.getElementById('text-joke').innerHTML = `" ${joke} "`;
-        
-        
-        tempJoke = joke;
-
+        htmlElement.innerHTML = `" ${joke} "`;
+        savedJoke = joke;
     } catch (e: any) {
-        document.getElementById('text-joke').innerHTML = e.message;
+        htmlElement.innerHTML = e.message;
     }
-
 }
-const reportJokes: Joke[] = [];
+
+const jokeRepository: Joke[] = [];
 function jokeScore(score: number) {
-    getJoke();
-    
-    const joke: Joke = new Joke(tempJoke, score, new Date().toISOString());
-
-    reportJokes.push(joke);
-
-    console.log(reportJokes);
-
+    requestJoke();
+    jokeRepository.push(new Joke(savedJoke, score, new Date().toISOString()));
+    console.log("Joke repository:", jokeRepository);
 }
