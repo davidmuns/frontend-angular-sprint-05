@@ -12,18 +12,20 @@ body {
     margin: 10px;
     border: none;
 }
-.btn-emoji:hover{
+
+.btn-emoji:hover {
     background-color: yellow;
 }
 
-.container{
+.container {
     background-image: url('./img/blob.svg');
     background-repeat: no-repeat;
     background-position: center;
     height: 700px;
     background-size: 120% 120%;
 }
-#text-joke{
+
+#joke-in-paragraph {
     color: white;
     font-weight: bold;
     text-align: center;
@@ -37,8 +39,9 @@ body {
     border-radius: 10%;
 
 }
-.btn-get-dadJoke:hover{
-    background-color: bisque;    
+
+.btn-get-dadJoke:hover {
+    background-color: bisque;
 
 }
 
@@ -46,5 +49,3 @@ body {
     background-color: olive;
     padding: 20px;
 }
-
-
