@@ -8,12 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-class Joke {
-    constructor(joke, score, date) {
-        this.joke = joke;
-        this.score = score;
-        this.date = date;
-    }
+window.onload = () => {
+    navigator.geolocation.getCurrentPosition(requestWeatherToApi);
+};
+function requestWeatherToApi(position) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const apiKey = 'd0047952dfbeb9ec30622425fe11ed84';
+        let lon = position.coords.longitude;
+        let lat = position.coords.latitude;
+        let URL_WEATHER = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`;
+        let htmlElement = document.getElementById('weather-in-dom');
+        try {
+            let response = yield fetch(URL_WEATHER);
+            if (!response.ok)
+                throw new Error(`Error! status: ${response.status}`);
+            let weather = yield response.json();
+            console.log(weather);
+            htmlElement.innerHTML = weather.name + " | " + parseInt(weather.main.temp) + "ºC";
+        }
+        catch (e) {
+            htmlElement.innerHTML = e.message;
+        }
+    });
 }
 let savedJoke;
 function requestJokeToApi() {
@@ -39,35 +55,16 @@ function requestJokeToApi() {
         }
     });
 }
+class Joke {
+    constructor(joke, score, date) {
+        this.joke = joke;
+        this.score = score;
+        this.date = date;
+    }
+}
 const jokeRepository = [];
 function scoreJoke(score) {
     requestJokeToApi();
     jokeRepository.push(new Joke(savedJoke, score, new Date().toISOString()));
     console.log("Joke repository:", jokeRepository);
 }
-function setCoordinatesToApiWeatherUrl() {
-    navigator.geolocation.getCurrentPosition(requestWeatherToApi);
-}
-function requestWeatherToApi(position) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const apiKey = 'd0047952dfbeb9ec30622425fe11ed84';
-        let lon = position.coords.longitude;
-        let lat = position.coords.latitude;
-        let URL_WEATHER = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`;
-        let htmlElement = document.getElementById('weather-in-dom');
-        try {
-            let response = yield fetch(URL_WEATHER);
-            if (!response.ok)
-                throw new Error(`Error! status: ${response.status}`);
-            let weather = yield response.json();
-            console.log(weather);
-            htmlElement.innerHTML = weather.name + " | " + parseInt(weather.main.temp) + "ºC";
-        }
-        catch (e) {
-            htmlElement.innerHTML = e.message;
-        }
-    });
-}
-window.onload = () => {
-    setCoordinatesToApiWeatherUrl();
-};
