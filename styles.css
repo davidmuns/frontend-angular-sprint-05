@@ -25,10 +25,11 @@ body {
     background-size: 120% 120%;
 }
 
-#joke-in-paragraph {
+#joke-in-dom {
     color: white;
     font-weight: bold;
     text-align: center;
+    font-size: 18px;
 }
 
 
