@@ -11,29 +11,40 @@ async function requestWeatherToApi(position: any): Promise<void> {
         let response = await fetch(URL_WEATHER)
         if (!response.ok) throw new Error(`Error! status: ${response.status}`);
         let weather = await response.json();
-        console.log(weather);
         htmlElement.innerHTML = weather.name + " | " + parseInt(weather.main.temp) + "ºC";
     } catch (e: any) {
         htmlElement.innerHTML = e.message;
     }
 }
 
-let savedJoke: string;
+let jokeToRepo: string;
 async function requestJokeToApi(): Promise<void> {
-    const URL_JOKE: string = "https://icanhazdadjoke.com/";
+    let randomNumber: number = Math.random();
+    let randomURL: string;
+    let chuckNorrisJoke: boolean = false;
+    let htmlElement: HTMLElement = document.getElementById('joke-in-dom') as HTMLElement;
+    let joke: string;
     const header = {
         headers: {
             Accept: "application/json",
         }
     };
-    let htmlElement: HTMLElement = document.getElementById('joke-in-dom') as HTMLElement;
+    if (randomNumber > 0.4) {
+        randomURL = "https://icanhazdadjoke.com/";
+    } else {
+        randomURL = "https://api.chucknorris.io/jokes/random";
+        chuckNorrisJoke = true;
+    }
     try {
-        let response: Response = await fetch(URL_JOKE, header)
+        let response: Response = await fetch(randomURL, header)
         if (!response.ok) throw new Error(`Error! status: ${response.status}`);
-        let joke: string = await response.json()
-            .then(jokeJson => jokeJson.joke);
+        if (chuckNorrisJoke) {
+            joke = await response.json().then(jokeJson => jokeJson.value);
+        } else {
+            joke = await response.json().then(jokeJson => jokeJson.joke);
+        }
         htmlElement.innerHTML = `" ${joke} "`;
-        savedJoke = joke;
+        jokeToRepo = joke;
     } catch (e: any) {
         htmlElement.innerHTML = e.message;
     }
@@ -53,8 +64,8 @@ class Joke {
 
 const jokeRepository: Joke[] = [];
 function scoreJoke(score: number) {
-    requestJokeToApi();
-    jokeRepository.push(new Joke(savedJoke, score, new Date().toISOString()));
+    jokeRepository.push(new Joke(jokeToRepo, score, new Date().toISOString()));
     console.log("Joke repository:", jokeRepository);
+    requestJokeToApi();
 }
 
