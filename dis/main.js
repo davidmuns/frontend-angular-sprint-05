@@ -30,6 +30,8 @@ function requestWeatherToApi(position) {
         }
     });
 }
+const acuditBtn = document.querySelector('.btn-get-dadJoke');
+acuditBtn.addEventListener('click', requestJokeToApi);
 function requestJokeToApi() {
     return __awaiter(this, void 0, void 0, function* () {
         let randomNumber = Math.random();
