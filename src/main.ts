@@ -17,7 +17,7 @@ async function requestWeatherToApi(position: any): Promise<void> {
     }
 }
 
-const acuditBtn: HTMLElement = document.querySelector('.btn-get-dadJoke') as HTMLElement;
+const acuditBtn: HTMLElement = document.querySelector('.btn-getJoke') as HTMLElement;
 acuditBtn.addEventListener('click', requestJokeToApi);
 
 async function requestJokeToApi(): Promise<void> {
