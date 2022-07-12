@@ -33,7 +33,7 @@ body {
 }
 
 
-.btn-get-dadJoke {
+.btn-getJoke {
     background-color: rgb(230, 223, 223);
     padding: 10px 20px;
     border: 2px solid gray;
@@ -41,7 +41,7 @@ body {
 
 }
 
-.btn-get-dadJoke:hover {
+.btn-getJoke:hover {
     background-color: bisque;
 
 }
