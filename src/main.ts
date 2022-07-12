@@ -17,7 +17,6 @@ async function requestWeatherToApi(position: any): Promise<void> {
     }
 }
 
-let jokeToRepo: string;
 async function requestJokeToApi(): Promise<void> {
     let randomNumber: number = Math.random();
     let randomURL: string;
@@ -39,10 +38,9 @@ async function requestJokeToApi(): Promise<void> {
         if (!response.ok) throw new Error(`Error! status: ${response.status}`);
         let jokeJson: any = await response.json();
         let joke: string = isChuckNorrisJoke ? jokeJson.value : jokeJson.joke;
-        htmlElement.innerHTML = `" ${joke} " | Chuck Norris joke? ${isChuckNorrisJoke}`;
-        jokeToRepo = joke;
+        htmlElement.innerText = `" ${joke} " | Chuck Norris joke? ${isChuckNorrisJoke}`;
     } catch (e: any) {
-        htmlElement.innerHTML = e.message;
+        htmlElement.innerText = e.message;
     }
 }
 
@@ -60,7 +58,8 @@ class Joke {
 
 const jokeRepository: Joke[] = [];
 function scoreJoke(score: number) {
-    jokeRepository.push(new Joke(jokeToRepo, score, new Date().toISOString()));
+    const htmlElement: HTMLElement = document.getElementById('joke-in-dom') as HTMLElement;
+    jokeRepository.push(new Joke(htmlElement.innerText, score, new Date().toISOString()));
     console.log("Joke repository:", jokeRepository);
     requestJokeToApi();
 }
