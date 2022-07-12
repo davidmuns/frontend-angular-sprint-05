@@ -17,6 +17,9 @@ async function requestWeatherToApi(position: any): Promise<void> {
     }
 }
 
+const acuditBtn: HTMLElement = document.querySelector('.btn-get-dadJoke') as HTMLElement;
+acuditBtn.addEventListener('click', requestJokeToApi);
+
 async function requestJokeToApi(): Promise<void> {
     let randomNumber: number = Math.random();
     let randomURL: string;
