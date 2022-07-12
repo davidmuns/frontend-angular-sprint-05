@@ -1,5 +1,5 @@
 * {
-    padding: 0;
+    padding: 0px;
     margin: 0;
 }
 
@@ -23,6 +23,7 @@ body {
     background-position: center;
     height: 700px;
     background-size: 120% 120%;
+    margin-top: 100px;
 }
 
 #joke-in-dom {
