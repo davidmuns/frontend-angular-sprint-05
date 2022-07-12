@@ -35,9 +35,8 @@ function requestJokeToApi() {
     return __awaiter(this, void 0, void 0, function* () {
         let randomNumber = Math.random();
         let randomURL;
-        let chuckNorrisJoke = false;
+        let isChuckNorrisJoke = false;
         let htmlElement = document.getElementById('joke-in-dom');
-        let joke;
         const header = {
             headers: {
                 Accept: "application/json",
@@ -48,19 +47,15 @@ function requestJokeToApi() {
         }
         else {
             randomURL = "https://api.chucknorris.io/jokes/random";
-            chuckNorrisJoke = true;
+            isChuckNorrisJoke = true;
         }
         try {
             let response = yield fetch(randomURL, header);
             if (!response.ok)
                 throw new Error(`Error! status: ${response.status}`);
-            if (chuckNorrisJoke) {
-                joke = yield response.json().then(jokeJson => jokeJson.value);
-            }
-            else {
-                joke = yield response.json().then(jokeJson => jokeJson.joke);
-            }
-            htmlElement.innerHTML = `" ${joke} "`;
+            let jokeJson = yield response.json();
+            let joke = isChuckNorrisJoke ? jokeJson.value : jokeJson.joke;
+            htmlElement.innerHTML = `" ${joke} " | Chuck Norris joke? ${isChuckNorrisJoke}`;
             jokeToRepo = joke;
         }
         catch (e) {
