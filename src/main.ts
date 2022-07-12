@@ -21,9 +21,8 @@ let jokeToRepo: string;
 async function requestJokeToApi(): Promise<void> {
     let randomNumber: number = Math.random();
     let randomURL: string;
-    let chuckNorrisJoke: boolean = false;
+    let isChuckNorrisJoke: boolean = false;
     let htmlElement: HTMLElement = document.getElementById('joke-in-dom') as HTMLElement;
-    let joke: string;
     const header = {
         headers: {
             Accept: "application/json",
@@ -33,17 +32,14 @@ async function requestJokeToApi(): Promise<void> {
         randomURL = "https://icanhazdadjoke.com/";
     } else {
         randomURL = "https://api.chucknorris.io/jokes/random";
-        chuckNorrisJoke = true;
+        isChuckNorrisJoke = true;
     }
     try {
         let response: Response = await fetch(randomURL, header)
         if (!response.ok) throw new Error(`Error! status: ${response.status}`);
-        if (chuckNorrisJoke) {
-            joke = await response.json().then(jokeJson => jokeJson.value);
-        } else {
-            joke = await response.json().then(jokeJson => jokeJson.joke);
-        }
-        htmlElement.innerHTML = `" ${joke} "`;
+        let jokeJson: any = await response.json();
+        let joke: string = isChuckNorrisJoke ? jokeJson.value : jokeJson.joke;
+        htmlElement.innerHTML = `" ${joke} " | Chuck Norris joke? ${isChuckNorrisJoke}`;
         jokeToRepo = joke;
     } catch (e: any) {
         htmlElement.innerHTML = e.message;
