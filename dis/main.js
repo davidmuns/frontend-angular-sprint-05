@@ -30,7 +30,6 @@ function requestWeatherToApi(position) {
         }
     });
 }
-let jokeToRepo;
 function requestJokeToApi() {
     return __awaiter(this, void 0, void 0, function* () {
         let randomNumber = Math.random();
@@ -55,11 +54,10 @@ function requestJokeToApi() {
                 throw new Error(`Error! status: ${response.status}`);
             let jokeJson = yield response.json();
             let joke = isChuckNorrisJoke ? jokeJson.value : jokeJson.joke;
-            htmlElement.innerHTML = `" ${joke} " | Chuck Norris joke? ${isChuckNorrisJoke}`;
-            jokeToRepo = joke;
+            htmlElement.innerText = `" ${joke} " | Chuck Norris joke? ${isChuckNorrisJoke}`;
         }
         catch (e) {
-            htmlElement.innerHTML = e.message;
+            htmlElement.innerText = e.message;
         }
     });
 }
@@ -72,7 +70,8 @@ class Joke {
 }
 const jokeRepository = [];
 function scoreJoke(score) {
-    jokeRepository.push(new Joke(jokeToRepo, score, new Date().toISOString()));
+    const htmlElement = document.getElementById('joke-in-dom');
+    jokeRepository.push(new Joke(htmlElement.innerText, score, new Date().toISOString()));
     console.log("Joke repository:", jokeRepository);
     requestJokeToApi();
 }
